@@ -1,15 +1,16 @@
-- name: Deploy Ghost Theme
-  # You may pin to the exact commit or the version.
-  # uses: TryGhost/action-deploy-theme@26652c5cee097c6b31bbd3319b8427369043a566
-  uses: TryGhost/action-deploy-theme@v1.4.1
-  with:
-    # Ghost Admin API Url
-    api-url: 
-    # Ghost Admin API Key
-    api-key: 
-    # Files or folders to exclude (space-separated list)
-    exclude: # optional
-    # A custom theme name that overrides the default name in package.json
-    theme-name: # optional
-    # Path to a built zip file. If this is included, the `exclude` and `theme-name` options are ignored
-    file: # optional
+name: Deploy Theme
+on:
+  push:
+    branches:
+      - master
+      - main
+jobs:
+  deploy:
+    runs-on: ubuntu-18.04
+    steps:
+      - uses: actions/checkout@v2
+      - name: Deploy Ghost Theme
+        uses: TryGhost/action-deploy-theme@v1.4.0
+        with:
+          api-url: ${{ secrets.GHOST_ADMIN_API_URL }}
+          api-key: ${{ secrets.GHOST_ADMIN_API_KEY }}
